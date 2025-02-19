@@ -1,0 +1,14 @@
+{
+  "name": "@quantum-leap/workspace",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "pnpm --filter @quantum-leap/web-element-plus dev",
+    "docs:dev": "pnpm --filter @quantum-leap/docs dev",
+    "serve:watch": "pnpm --filter @quantum-leap/serve-nest start:dev"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
