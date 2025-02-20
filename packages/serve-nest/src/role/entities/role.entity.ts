@@ -63,7 +63,7 @@ export class Role {
 
   @ManyToMany(() => Menu)
   @JoinTable({
-    name: 'menu_role_relation',
+    name: 'role_menu_relation',
   })
   menus: Menu[]
 }
