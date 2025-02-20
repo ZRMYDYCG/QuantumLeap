@@ -18,9 +18,9 @@ export class MenuController {
   ) {
     return await this.menuService.createMenu(createMenuDto)
   }
-  @Post('/getRouters')
+  @Post('/getInfo')
   @ApiOperation({ summary: '获取路由' })
-  async getRouters(@Request() req) {
-    return await this.menuService.getRouters(req)
+  async getInfo(@Request() req) {
+    return await this.menuService.getInfo(req)
   }
 }

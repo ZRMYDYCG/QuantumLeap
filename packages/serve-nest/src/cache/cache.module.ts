@@ -1,7 +1,9 @@
-import { Module } from '@nestjs/common'
+import { Module, Global } from '@nestjs/common'
 import { CacheService } from './cache.service'
 import { createClient } from 'redis'
 import { ConfigService } from '@nestjs/config'
+// 设置为全局模块
+@Global()
 @Module({
   providers: [
     CacheService,
