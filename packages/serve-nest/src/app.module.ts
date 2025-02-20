@@ -17,7 +17,6 @@ const isProd = process.env.NODE_ENV === 'production'
 
 @Module({
   imports: [
-    UserModule,
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: [
@@ -54,6 +53,7 @@ const isProd = process.env.NODE_ENV === 'production'
         }
       },
     }),
+    UserModule,
     CacheModule,
     MenuModule,
     RoleModule,
