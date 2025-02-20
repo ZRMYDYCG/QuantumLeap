@@ -1,19 +1,21 @@
-import {
-  Controller,
-  Get,
-  Post,
-  Body,
-  Patch,
-  Param,
-  Delete,
-} from '@nestjs/common'
+import { Body, Controller, Post } from '@nestjs/common'
 import { MenuService } from './menu.service'
+import { ApiOperation, ApiTags, ApiOkResponse, ApiParam } from '@nestjs/swagger'
 import { CreateMenuDto } from './dto/create-menu.dto'
-import { UpdateMenuDto } from './dto/update-menu.dto'
-import { Public } from '../public/public.decorator'
-import { ApiOperation, ApiParam } from '@nestjs/swagger'
-
+import { Public } from 'src/public/public.decorator'
+import { Request } from '@nestjs/common'
 @Controller('menu')
+@ApiTags('菜单权限模块')
 export class MenuController {
   constructor(private readonly menuService: MenuService) {}
+  @Post('/createMenu')
+  @Public()
+  @ApiParam({ name: 'createMenuDto', type: CreateMenuDto })
+  @ApiOperation({ summary: '新增菜单' })
+  async createMenu(
+    @Body()
+    createMenuDto: CreateMenuDto,
+  ) {
+    return await this.menuService.createMenu(createMenuDto)
+  }
 }

@@ -23,6 +23,7 @@ export class CreateMenuDto {
     example: 1,
   })
   menu_type: number
+
   @ApiProperty({
     example: 'menu',
   })
@@ -41,6 +42,7 @@ export class CreateMenuDto {
     required: false,
   })
   path: string
+
   @ApiProperty({
     example: 11,
   })

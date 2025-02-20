@@ -13,4 +13,12 @@ export class MenuService {
     @InjectRepository(Menu) private readonly menuRepository: Repository<Menu>,
     @InjectRepository(User) private readonly userRepository: Repository<User>,
   ) {}
+  async createMenu(createMenuDto: CreateMenuDto) {
+    try {
+      await this.menuRepository.save(createMenuDto)
+      return '菜单新增成功'
+    } catch (error) {
+      throw new ApiException('菜单新增失败', 20000)
+    }
+  }
 }
