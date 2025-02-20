@@ -14,7 +14,7 @@ export class RoleService {
     @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
     @InjectRepository(Menu) private readonly menuRepository: Repository<Menu>,
   ) {}
-  async create(createRoleDto: CreateRoleDto): Promise<string> {
+  async create(createRoleDto: any): Promise<string> {
     const row = await this.roleRepository.findOne({
       where: { role_name: createRoleDto.role_name },
     })

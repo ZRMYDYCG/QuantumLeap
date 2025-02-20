@@ -30,7 +30,6 @@ export class UserController {
   @ApiOperation({ summary: '用户注册' })
   @ApiOkResponse({ description: '返回示例', type: CreateUserVo })
   create(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto)
     return this.userService.create(createUserDto)
   }
 

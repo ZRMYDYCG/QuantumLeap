@@ -2,8 +2,9 @@ import { Injectable, HttpStatus, HttpException } from '@nestjs/common'
 import { CreateUserDto } from './dto/create-user.dto'
 import { UpdateUserDto } from './dto/update-user.dto'
 import { User } from './entities/user.entity'
+import { Role } from '../role/entities/role.entity'
 import { InjectRepository } from '@nestjs/typeorm'
-import { Repository } from 'typeorm'
+import { Repository, In } from 'typeorm'
 import { ApiException } from '../common/filter/http-exception/api.exception'
 import { ApiResponseCode } from '../common/enums/api-response-code.enum'
 import { LoginDto } from './dto/login.dto'
@@ -16,6 +17,7 @@ import { CacheService } from '../cache/cache.service'
 export class UserService {
   constructor(
     @InjectRepository(User) private readonly userRepository: Repository<User>,
+    @InjectRepository(Role) private readonly roleRepository: Repository<Role>,
     private readonly jwtService: JwtService,
     private readonly cacheService: CacheService,
   ) {}
@@ -35,6 +37,16 @@ export class UserService {
     }
     try {
       const newUser = new User()
+      if (createUserDto.role_ids?.length) {
+        // 查询需要绑定的角色列表（自动在关联表生成表关系）
+        const roleList = await this.roleRepository.find({
+          where: {
+            id: In(createUserDto.role_ids),
+          },
+        })
+        console.log('roleList', roleList)
+        newUser.roles = roleList
+      }
       newUser.username = username
       newUser.password = password
       await this.userRepository.save(newUser)

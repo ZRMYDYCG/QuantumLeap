@@ -5,38 +5,70 @@ import {
   BeforeInsert,
   ManyToMany,
   JoinTable,
+  UpdateDateColumn,
+  CreateDateColumn,
 } from 'typeorm'
 import encry from '../../utils/crypto'
 import * as crypto from 'crypto'
-import { Role } from '../../role/entities/role.entity'
-
-@Entity('user')
+import * as moment from 'moment'
+import { Role } from 'src/role/entities/role.entity'
+@Entity('fs_user')
 export class User {
-  @PrimaryGeneratedColumn('uuid')
-  id: number // 标记为主建, 值自动生成
+  @PrimaryGeneratedColumn()
+  id: number // 标记为主键，值自动生成
+
   @Column({ length: 30 })
-  username: string // 用户名
+  username: string //用户名
   @Column({ nullable: true })
-  nickname: string // 昵称
-  @Column()
-  password: string // 密码
+  nickname: string //昵称
+
+  //默认密码 123456
+  @Column({
+    default: '20989eb67e13fdee0a42504dd0b3cf65358b',
+  })
+  password: string //密码
   @Column({ nullable: true })
-  avatar: string // 用户头像
+  avatar: string //头像
   @Column({ nullable: true })
-  email: string // 邮箱
+  email: string //邮箱
   @Column({ nullable: true })
-  role: string // 角色
-  @Column({ nullable: true })
-  salt: string // 密码盐
+  telephone: string //手机号
+  @Column({
+    default: 1,
+  })
+  status: number //状态 0:禁用 1:启用
+  @Column({ nullable: true, default: 'q5+Kdg==' })
+  salt: string
+  @Column({ nullable: true, default: 0 })
+  is_admin: number //是否为管理员 1:是 0:否
   @ManyToMany(() => Role)
   @JoinTable({
-    name: 'user_role_relation',
+    name: 'fs_user_role_relation',
   })
-  roles: Role[] // 角色关系
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  created_at: Date // 创建时间
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  updated_at: Date // 更新时间
+  roles: Role[]
+  @CreateDateColumn({
+    transformer: {
+      to: (value) => {
+        return value
+      },
+      from: (value) => {
+        return moment(value).format('YYYY-MM-DD HH:mm:ss')
+      },
+    },
+  })
+  create_time: Date
+
+  @UpdateDateColumn({
+    transformer: {
+      to: (value) => {
+        return value
+      },
+      from: (value) => {
+        return moment(value).format('YYYY-MM-DD HH:mm:ss')
+      },
+    },
+  })
+  update_time: Date
   @BeforeInsert()
   beforeInsert() {
     this.salt = crypto.randomBytes(4).toString('base64')
