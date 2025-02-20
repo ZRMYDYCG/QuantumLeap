@@ -12,7 +12,7 @@ import encry from '../../utils/crypto'
 import * as crypto from 'crypto'
 import * as moment from 'moment'
 import { Role } from 'src/role/entities/role.entity'
-@Entity('fs_user')
+@Entity('user')
 export class User {
   @PrimaryGeneratedColumn()
   id: number // 标记为主键，值自动生成
@@ -36,14 +36,14 @@ export class User {
   @Column({
     default: 1,
   })
-  status: number //状态 0:禁用 1:启用
+  status: number //状态 0:禁用 1: 启用
   @Column({ nullable: true, default: 'q5+Kdg==' })
   salt: string
   @Column({ nullable: true, default: 0 })
   is_admin: number //是否为管理员 1:是 0:否
   @ManyToMany(() => Role)
   @JoinTable({
-    name: 'fs_user_role_relation',
+    name: 'user_role_relation',
   })
   roles: Role[]
   @CreateDateColumn({

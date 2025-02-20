@@ -37,9 +37,10 @@ export class UserGuard implements CanActivate {
       throw new HttpException('验证失败', HttpStatus.FORBIDDEN)
     }
     try {
-      request['user'] = await this.jwtService.verifyAsync(token, {
+      const payload = await this.jwtService.verifyAsync(token, {
         secret: this.configService.get('JWT_SECRET'),
       })
+      request['user'] = payload
     } catch {
       throw new HttpException('验证失败', HttpStatus.FORBIDDEN)
     }

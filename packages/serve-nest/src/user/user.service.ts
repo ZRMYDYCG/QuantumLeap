@@ -49,6 +49,8 @@ export class UserService {
       }
       newUser.username = username
       newUser.password = password
+
+      console.log('newUser', newUser)
       await this.userRepository.save(newUser)
       return '注册成功'
     } catch (error) {
@@ -61,10 +63,10 @@ export class UserService {
     const user = await this.userRepository.findOne({
       where: { username },
     })
-    const cacheCaptcha = await this.cacheService.get(id)
-    if (captcha.toLowerCase() !== cacheCaptcha?.toLowerCase()) {
-      throw new ApiException('验证码错误', ApiResponseCode.COMMON_CODE)
-    }
+    // const cacheCaptcha = await this.cacheService.get(id)
+    // if (captcha.toLowerCase() !== cacheCaptcha?.toLowerCase()) {
+    //   throw new ApiException('验证码错误', ApiResponseCode.COMMON_CODE)
+    // }
     if (!user) {
       throw new ApiException('用户不存在', ApiResponseCode.USER_NOT_EXIST)
     }

@@ -35,7 +35,7 @@ export class UserController {
 
   @Public()
   @Post('login')
-  login(@Body() LoginDto: LoginDto) {
+  login(@Body() LoginDto: any) {
     return this.userService.login(LoginDto)
   }
 
