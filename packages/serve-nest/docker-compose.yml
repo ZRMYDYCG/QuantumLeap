@@ -1,0 +1,41 @@
+version: '3.8' # 使用较新的版本号
+
+services:
+  serve-nest:
+    build:
+      context: ./ # 构建上下文路径
+      dockerfile: ./Dockerfile # 使用的 Dockerfile 路径
+    depends_on:
+      - quantum_leap
+      - admin_redis
+    ports:
+      - "3000:3000" # 映射端口
+    networks:
+      - common-network
+    volumes:
+      - ${APP_PATH}:/app/static # 挂载卷
+
+  quantum_leap:
+    image: mysql
+    volumes:
+      - ${MYSQL_DATA_PATH}:/var/lib/mysql # 挂载卷
+    environment:
+      MYSQL_DATABASE: ${DB_DATABASE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWD}
+    networks:
+      - common-network
+    ports:
+      - "3307:${DB_PORT}" # 显式映射 MySQL 端口
+
+  admin_redis:
+    image: redis
+    volumes:
+      - ${REDIS_DATA_PATH}:/data # 挂载卷
+    networks:
+      - common-network
+    ports:
+      - "6379:${REDIS_PORT}" # 显式映射 Redis 端口
+
+networks:
+  common-network:
+    driver: bridge # 使用桥接驱动
