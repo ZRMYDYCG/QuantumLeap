@@ -6,7 +6,7 @@ COPY package.json .
 
 RUN npm config set registry https://registry.npmmirror.com/
 
-RUN npm install --legacy-peer-deps
+RUN npm install --force
 
 COPY . .
 
@@ -26,7 +26,7 @@ ENV NODE_ENV production
 
 RUN npm config set registry https://registry.npmmirror.com/
 
-RUN npm install --only=production
+RUN npm install --only=production --legacy-peer-deps
 
 EXPOSE 3000
 
