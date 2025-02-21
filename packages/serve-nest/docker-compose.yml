@@ -9,7 +9,7 @@ services:
       - quantum_leap
       - admin_redis
     ports:
-      - "3000:3000" # 映射端口
+      - "5178:5178" # 映射端口
     networks:
       - common-network
     volumes:
