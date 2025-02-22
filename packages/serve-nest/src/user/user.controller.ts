@@ -28,7 +28,7 @@ export class UserController {
   @Public()
   @Post('register')
   @ApiOperation({ summary: '用户注册' })
-  @ApiOkResponse({ description: '返回示例', type: CreateUserVo })
+  @ApiOkResponse({ description: '返   回示例', type: CreateUserVo })
   create(@Body() createUserDto: CreateUserDto) {
     return this.userService.create(createUserDto)
   }
