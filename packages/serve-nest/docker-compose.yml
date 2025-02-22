@@ -18,10 +18,10 @@ services:
   quantum_leap:
     image: mysql
     volumes:
-      - ${MYSQL_DATA_PATH}:/var/lib/mysql # 挂载卷
+      - ${MYSQL_DATA_PATH}:/var/lib/mysql-docker # 挂载卷
     environment:
       MYSQL_DATABASE: ${DB_DATABASE}
-      MYSQL_ROOT_PASSWORD: ${DB_PASSWD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
     networks:
       - common-network
     ports:
